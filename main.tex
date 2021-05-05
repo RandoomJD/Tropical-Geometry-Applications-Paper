@@ -1,0 +1,646 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Template for Final Year Projects
+%
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{enumerate}
+%\usepackage{amsrefs}
+
+\usepackage{tikz}
+\usepackage{graphicx}
+
+\usepackage{biblatex}
+\addbibresource{main.bib}
+
+\newcommand{\trop}[1]{\operatorname{Trop}(#1)}
+\newcommand{\val}[1]{\operatorname{val}(#1)}
+\newcommand{\init}[2]{\operatorname{in}_{#1}(#2)}
+\newcommand{\initw}[1]{\init{w}{#1}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\TM}{\mathcal{M}}
+\newcommand{\TN}{\mathcal{N}}
+
+\newcommand{\K}{\mathbb{K}}
+
+\newcommand{\cont}{\text{\textreferencemark}}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}{Corollary}[thm]
+\newtheorem{lem}[thm]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{ex}{Example}[section]
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{note}{Note}
+\newtheorem{case}{Case}
+
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Topmatter
+%
+\title{Tropical Geometry and the Automata}
+\author{James Grant Dolan}
+\begin{abstract}
+Tropical Geometry is a variant of Algebraic Geometry that began its consolidation in the late 20th Century. The initial motivation for the definition of Tropical Geometry was for its application within the field of Automata Theory. I will outline the historical origins of the subject and introduce the key mathematicians involved in the continued development of the area. In recent years it has been applied in dynamic programming to economics. This paper will focus on Tropical Geometry as it relates to Automata Theory. I will look at historical and contemporary work in forging the connection between the fields and show how this connection has evolved.
+\end{abstract}
+\maketitle
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Main body of the document
+%
+
+\tableofcontents
+
+\newpage
+\section*{Introduction}
+
+\subsection*{Past}
+Tropical Geometry is a variant of Algebraic Geometry that began its consolidation in the late 20th Century.
+Though the basic ideas of tropical analysis have been formulated independently across many areas of mathematics for some time, it was only then that the ground work was laid for the topic and indeed it was attributed its unique name.
+It was so named in honour of computer scientist Imre Simon, who contributed massively to the field\cite{10.1007/BFb0017135}, in reference to the tropical climate of his native Brazil and the relatively unexplored nature of the field.
+
+In this paper I will outline the historical origins of the subject and introduce the key mathematicians involved in the continued development of the area, with reference to specific key works.
+In doing so I will build up a common knowledge base reflecting current state of the field.
+This will include a variety of sources from various areas of mathematics with varying strengths and weaknesses.
+I will then go on to give an understanding of the applications of Tropical Geometry and show how the scope of the tools contained within have grown across time.
+Next, I will give an overview of the latest developments within the field and possible directions that could be further explored in future. 
+Finally, I will delve into the most recent works as they relate to Automata Theory and expand upon the already understood relations.
+
+In one of the earliest on the topic\cite{10.1007/BFb0017135} Simon talks about the Tropical semiring with respect to automata theory and the motivations behind its discovery in the field.
+For an understanding of the sum of early work see \textit{Tropical Semirings}\cite{pin1998tropical} by Jean-Eric Pin, another key contributor to the field.
+The survey is written from the computer science perspective and as such takes the time to introduces mathematical objects, such as monoids and semirings, that a reader, coming from the school of mathematics, may very well already be familiar.
+This however proves to maximise the work's accessibility and makes it a great entry point into Tropical Geometry.
+The book proves an interesting read not only for its exploration of the immediate applications of Tropical Geometry but also for a slightly different perspective on its definition and construction.
+
+\newpage
+\section{Foundation}
+\subsection{The Tropical Semiring}
+\subsubsection{Definition}
+For purposes that will become apparent later, we would like to obtain a semiring in the operations $\min, +$, that is the minimum operator together with standard addition. Note, it is clear that we may not obtain a ring by these two operations as $\min$ is an inherently 'lossy' operation, meaning information is always lost about the operands, and thus it can have no general inverse. We would also like this semiring to act over a set similar to the reals. While the reals themselves give us a unit in the standard additive identity, $0$, we do not however get a zero in the reals. To obtain this we must adjoin an element defined to be the $\min$ identity and also an absorbing element under addition. It is convenient to denote such an element with $\infty$ as on a bounded subset of $\R$ these properties would hold for any arbitrarily large number. With this notation, we can rewrite the above conditions as follows;
+\begin{equation}
+    \begin{aligned}
+        \min(\infty, a) = a,\quad \infty + a = \infty&\quad\forall\quad a\in\R \\
+        \min(\infty, \infty) = \infty,\quad \infty + \infty = \infty&.
+    \end{aligned}
+\end{equation}
+We can see from this that this element behaves much as would be expected of infinity.
+
+We can denote the constructed semiring by $(\R\cup\{\infty\},\min,+)$ and call it the Tropical Semiring. Equivalently, using a more specific notation, we can write $(\T,\oplus,\otimes)$ with the individual notation representing the tropical numbers, tropical addition and tropical multiplication respectively.
+
+It is worth noting that if we instead constructed our semiring using $\max$ in place of $\min$ the appended element would instead behave as $-\infty$. In fact, these two rings would be isomorphic under negation so this notation makes sense. We could have also tried to construct this semiring over the integers or indeed the natural numbers. These would also form valid semirings with just the addition of the infinity element as defined before. We call these the discrete tropical semiring and the non-negative discrete tropical semiring respectively.
+
+\subsubsection{First Applications}
+
+\subsection{Tropical Polynomials}
+
+\begin{equation}
+    p(x_1,\dots,x_n) = a\otimes x_1^{i_1}x_2^{i_2}\dots x_n^{i_n}\oplus\dots
+\end{equation}
+
+\subsubsection{Valuation}
+
+
+\defn
+For a field $\K$, we call a function $v:\K\to\T$ a \textbf{valuation map} over the field $\K$, or more simply just a \textbf{valuation} over $\K$, provided it satisfies the following conditions;
+\begin{enumerate}
+    \item $v(x) = \infty$ if and only if $x = 0$
+    \item $v(xy) = v(x) + v(y)$
+    \item $v(x+y) \geq \min( v(x),v(y) )$
+\end{enumerate} for all $x,y\in \K^*$.
+We call the additive subgroup over the image of a valuation map it's \textbf{value group} and it is denoted $\Gamma_v\subseteq\R$.
+
+\note
+We can assume without loss of generality that a general valuation group is contains $1$ as $\lambda\cdot v$ is a valuation for all valuation $v$, $\lambda\in\R^+$
+
+Now the above are only the necessary properties for a such a function to be a valuation map. There are a handful of other useful properties of all valuations induced by these simple rules that it is (diligent) to take note of for use in larger and more complex proofs.
+
+\begin{lem}
+Any valuation $v$ over a field $\K$ has the following additional properties;
+\begin{enumerate}
+    \item $v(1) = v(-1) = 0$
+    \item $v(-x) = v(x)$
+    \item $v(x^{-1}) = -v(x)$
+    \item If $v(x) \neq v(y)$ then condition (3) is a strict equality.
+\end{enumerate} for all $x,y\in \K^*$
+\end{lem}
+\begin{proof}
+By condition (1) we have
+\begin{align*}
+    v(1) = v(1\cdot1) = 2v(1)\quad&\implies\quad v(1) = 0\\
+    v(1) = v(-1\cdot-1) = 2v(-1)\quad&\implies\quad v(-1) = v(1) = 0
+\end{align*}
+thus proving property (1).
+Following on from this we also have
+\begin{align*}
+    v(-x) = v(-1\cdot x) = v(-1) + v(x) = v(x)
+\end{align*}
+thus proving property (2).
+\begin{align*}
+    v(1) = v(x\cdot x^{-1}) = v(x) + v(x^{-1})\quad&\implies\quad v(x^{-1}) = -v(x)
+\end{align*}
+thus proving property (3).
+
+In order to prove the final property, we will assume, without loss of generality, that $v(a)<v(b)$
+
+\end{proof}
+
+\begin{ex}[The p-adic valuation]
+Take the field of rational numbers $\Q$ and any prime number $p$. We can define a valuation $v_p:\Q\to\T$ by $v_p(p)=1$, $p_k(q) = 0$ for all $q\in\Z^*$ coprime with respect to $p$. This completely defines $v_p$ on $\Q$ under the assertion that this be a valuation as we define $p_k(0) = \infty$ by condition (1) and any other undefined element in $\Q$ can be written as a product of the well defined elements $p, a/b\in\Q$ and be evaluated using condition (2).
+
+To show that condition (2) is completely satisfied we must show that it also holds when $x$ and $y$ are of different `type`.
+\begin{case}
+$x = p^k$, $y = p^l$
+\begin{align*}
+    v(x) + v(y) &= v(p^k) + v(p^l)\\
+    &= k+l = v(p^{k+l})\\
+    &= v(p^k p^l) = v(xy)
+\end{align*}
+\end{case}
+\begin{case}
+$x = a/b$, $y = c/d$
+\begin{align*}
+    v(x) + v(y) &= v\left(\frac{a}{b}\right) + v\left(\frac{c}{d}\right) = 0\\
+    &= v\left(\frac{ac}{bd}\right) = v\left(\frac{a}{b}\frac{c}{d}\right) = 
+    v(xy)
+\end{align*}
+\end{case}
+\end{ex}
+
+\textbf{MOVE SOMEWHERE MORE APPROPRIATE}{
+\begin{defn}[Laurent field]
+A \textbf{Laurent series} is a power series that allows a finite number of negative exponents.
+The \textbf{Laurent field} over some field $\K$ is thus the field containing all such series with coefficients in $\K$. We denote this field $\K((t))$ where $t$ is the indeterminate.
+\end{defn}
+
+\begin{ex}
+The general elements of the Laurent series $\R((t))$ are of the form
+\begin{equation*}
+    \sum_{n=N}^\infty c_n t^n
+\end{equation*}
+for some $N\in\Z$, $c_N,c_{N+1},\dots\in\R$. Note that for certain elements of the series that contain negative exponents exists, $N$ will be negative also.
+\end{ex}
+
+\begin{defn}[Puiseux field]
+A \textbf{Piuseux series} is a power series that allows both a finite number of negative exponents, and fractional exponents. One additional restriction is that all of the fractional exponents must be able to be expressed over the same denominator.
+The \textbf{Puiseux field} over some other field $\K$ is thus the field containing all such series with coefficients in $\K$. We denote this field $\K\{\{t\}\}$ where $t$ is the indeterminate.
+\end{defn}
+}
+
+%For the remainder of this paper we shall use $K = \K\{\{t\}\}$ to denote the general Piuseux field over the general field $\K$
+
+\begin{thm}
+For any algebraically closed field of characteristic zero, the field of Puiseux series over that filed will also be algebraically closed.
+\end{thm}
+
+\begin{ex}[The Puiseux valuation]
+Take the field of complex Puiseux series $\C\{\{ t \}\}$. We can define a natural valuation $v$ on this field by taking every $c(t)\in\C\{\{ t \}\}^*$ to the lowest power on $t$ in the unique Laurent series expansion of $c(t)$ i.e. the unique $k\in\T$ such that $c(t) = t^k + o(t^k)$. We can say this is unique as if this were true for some $k,l\in\T$, $k<l$ WLOG, then we have
+\begin{align*}
+    t^k + o(t^k) = t^l + o(t^l) = t^l + o(t^k)\quad\implies\quad k = l\quad\cont
+\end{align*}
+Now in actual fact what this valuation is telling us about each of these elements, which you could perhaps guess by the use of Laurent series and little-o notation, is their behaviour at and about the point point $t=0$. More specifically, it encodes both weather there is a zero or a pole at this point, by way of the sign of the valuation, and the order of such a feature, by way of the magnitude of the valuation. Of course should the function have zero valuation there is neither a zero or a pole at this point.
+
+\textbf{SPECIFIC VALUES}
+
+
+\end{ex}
+
+\subsubsection{Tropicalization}
+
+\defn{Tropicalization}
+Take a standard polynomial $f\in\R[x]$, the \textbf{tropicalization} of this polynomial is obtained by substitution of multiplication and addition by their tropical counterparts and the coefficients by their tropical evaluation. That is given polynomial $f = \sum_{i=0}^n c_ix^i$, and valuation $v$, we have
+\begin{equation}
+    \trop{f} = \bigoplus_{i=0}^n v(c_i) \otimes \underbrace{x\otimes\dots\otimes x}_\text{$i$ times}.
+\end{equation}
+Proper notation for tropical indices is
+\begin{equation}
+    x^{\otimes n} = \underbrace{x\otimes\dots\otimes x}_\text{$n$ times}
+\end{equation}
+however, as with tropical multiplication, where there is no ambiguity we can drop the $\otimes$ and represent this with a standard index.
+
+\subsection{Tropical Geometry}
+
+The Tropical Geometry itself is generated by the function $V:\T[x_1,\dots,x_n]\to 2^\T$ from polynomials in Tropical semiring to a subset of the tropical numbers where the minimum is attained at least twice.
+
+Within the field we refer to these operations as Tropical addition and Tropical multiplication respectively and they are denoted $\oplus$ and $\otimes$.
+The infinity element is added to the the set to ensure the semiring axioms are satisfied, with $\infty$ being the zero of the semiring. 
+
+For a more complete view of the subject see \textit{Introduction to tropical geometry}\cite{MaclaganDiane1974-author2015Ittg} by Maclagan and Sturmfels, the current authorities on the subject.
+This book introduces Tropical Geometry as a "combinatorial shadow" of algebraic geometry so a basic understanding of algebraic geometry is required to gain  a full appreciation of the text and indeed the field as a whole.
+To this end, \textit{Ideals, Varieties, and Algorithms}\cite{CoxDavid2007IVaA} by Cox, Little, and O’Shea is also recommended. The book goes over algebraic geometry in a way that is accessible to undergraduate students.
+For a more complex understanding of Tropical Geometry see \textit{Nonarchimedean and tropical geometry}\cite{baker2016nonarchimedean} by Matthew Baker and Sam Payne.
+
+Its creation was motivated by the recent increase in interest in the subject among the mathematics community brought on by advancements in computing power allowing a greater insight into combinatorial mathematics as a whole. The writers hoped this would aid the move of the subject to undergraduate teaching.
+It is also recommended you carry some reference texts on polyhedra and polytopes.
+For this purpose \textit{Lectures on Polytopes}\cite{ZieglerGunterM1995Lop} by Ziegler would make excellent companion reading. This book will aid in gaining an intuition regarding the structures generated by the geometries discussed later in the paper.
+
+\subsubsection{Nice Properties}
+
+\defn
+Consider the intersection of two line segments with unit direction vectors $(u_1,u_2)$, $(v_1,v_2)$ respectively.
+The \textbf{multiplicity} of points of intersection is defined to be
+\begin{equation}
+    \left|\det
+    \begin{pmatrix}
+        u_1 & v_1\\
+        u_2 & v_2
+    \end{pmatrix}
+    \right|
+\end{equation}
+Note that if these line segments intersect at more than one point then they must be parallel and thus the multiplicity will be zero.
+
+%Note, this is the same reason that the repeated root in $y=x^3$ does not result in two intersections of the x-axis.
+
+\begin{thm}[Bézout's theorem]
+Two general curves, $C$ and $D$, of degree $c$ and $d$ respectively in $\R^2$ have $c d$ many intersection points when counted with multiplicity.
+\end{thm}
+
+\begin{defn}[stable]
+
+\end{defn}
+
+\begin{thm}[Stable Intersection]
+
+\end{thm}
+
+\begin{cor}
+Any two curves, $C$ and $D$, of degree $c$ and $d$ respectively in $\R^2$ have $c d$ many stable intersection points when counted with multiplicity.
+\end{cor}
+
+\subsubsection{Smoothness}
+
+\subsection{Tropical Curves}
+
+\subsection{Tropicalization of varieties}
+
+\subsubsection{In the Hypersurface}
+
+Early theorem, unpublished
+
+\begin{thm}[Karpranov]
+
+\end{thm}
+
+\defn
+We define the \textbf{tropicalization} of a variety $X$ in the algebraic torus $T^n$ as the intersection of all tropical hypersurfaces derived from the laurent polynomials within its generating ideal. That is
+\begin{equation}
+    \trop{X} = \bigcap_{f\in I(X)} V(\trop{f}) \subseteq \R^n
+\end{equation}
+
+\begin{thm}
+test
+\end{thm}
+
+\begin{cor}
+Given a Laurent polynomial $f\in K[\mathbf{x}^{\pm1}]$, if all of its coefficients are of zero value then the tropical hypersurface $\trop{V(f)}$ is the support of an $n-1$ dimensional polyhedral fan in $\R^n$. More specifically, that fan is the $n-1$ skeleton of the normal fan to the Newton polytope of $f$.
+\end{cor}
+
+%From this previous definition of the tropicalization of a variety, we can construct two equivalent definitions
+
+%of tropicalization of a variety provides us two alternate definitions which coincide exactly with the first as follows
+
+\subsubsection{The Fundamental Theorem}
+
+\begin{lem}
+$X=V(I)\subset\T^n$
+\begin{align*}
+    \overline{\val{X}}\subseteq\trop{X}\subseteq\{ w\in\R^n : \initw{I} \neq \langle1\rangle> \}
+\end{align*}
+\end{lem}
+
+\begin{thm}[The Fundamental Theorem of Tropical Geometry]
+Given a variety $X$ in the algebraic torus $T^n$ we can also define the tropicalization
+\begin{enumerate}
+    \item $\trop{X} = \{ w\in\R^n : \text{in}_wI(X) \neq (1) \}$
+    \item $\trop{X} = \overline{\{ (v(x_1),\dots,v(x_n)) : (x_1,\dots,x_n)\in X \}}$
+\end{enumerate}
+\end{thm}
+
+\subsection{Structure Theorem}
+%\thm{The Structure Theorem}
+\subsubsection{Work}
+\subsubsection{Proofs}
+
+\newpage
+\section{Application}
+As discussed previously the initial motivation for the definition of Tropical Geometry was for its application within the field of Automata Theory.
+Moreover, given that the early applications of Tropical Geometry were in Automata Theory and computer science more generally.
+Although, Tropical Geometry has been “anonymously” used in maths for some time, applications in this area were less developed around its conception. 
+Another application of Tropical Geometry resides within dynamical programming. Here, after tropicalization of the adjacency matrix, an optimisation problem becomes one of taking the determinant of the matrix under tropical arithmetic which itself becomes the process of taking the permanent due to the lack of a well defined negation operation within the arithmetic.
+
+The Geometry also has some very more real world applications.
+In the wake of the 2007 global financial crisis, Economist Paul Klemperer was tasked by the Bank of England with developing a bespoke auction system that could better inform government lending in order to provide liquidity to the banks that, at the time, vitally needed it.
+As the problem was fundamentally one of resource allocation, it felt natural to use Tropical Geometry in order to tackle this problem. Indeed, he had already become somewhat familiar with the basic principles whilst organising the British third-generation mobile-phone licence auction earlier in 2000\cite{binmore2002biggest}.
+Of course then the subject as we know it today was only in its infancy.
+To this end, he invented the Product-Mix Auction\cite{klemperer2010product}.
+This system allowed the Bank of England to forgo the weeks of arbitration that were necessary during the earlier 3G auction meaning the capitol could enter the economy as soon as possible and aid financial recovery.
+For a full understanding of the mathematics see \textit{Understanding preferences:“demand types”, and the existence of equilibrium with indivisibilities}.\cite{baldwin2019understanding} by Elizabeth Baldwin and Paul Klemperer.
+
+\subsection{Automata Theory}
+In this section, I will focus on Tropical Geometry as it relates to Automata Theory.
+Automata which are state machines that can either accept or reject a set of inputs depending on what state it leaves the machine in.
+These range from simple finite state machines to more complex Turing machines which in comparison have a theoretically unlimited memory capacity as they are able to freely read and write from their own instruction queue.
+For an understanding of the basics of finite automata I would recommend \textit{Finite Automata}\cite{lawson2003finite} by Mark V Lawson. Most of the more complete textbooks on Automata Theory are written with an assumption of a basic understanding of computer science so the reading individual papers on specific areas is required to gain a full understanding from a mathematical perspective.
+
+Given that applications in Automata Theory formed the basis for many of the early literature regarding Tropical Geometry\cite{simon1978limited}, it is fitting that we return to the field now to investigate the advances now made possible with 21st century technologies and understanding.
+Interesting contemporary works in this field include \textit{Automata in groups and dynamics
+and induced systems of PDE in
+tropical geometry}\cite{kato2014automata} by Tsuyoshi Kato.
+Using these preliminary texts as a basis, I will seek to find more contemporary texts on the subject to inform my study.
+
+\subsection{Semiring Applications}
+As previously mentioned, Simon's reconstruction of the tropical semiring was motivated by problems from Automata theory. Moreover, he was interested in finding conditions under which languages were limited that is the Kleene star of such a a language can be represented as the union of only finitely many powers of the language. This was a response to the earlier counter-example provided by Golod and Shafarevich which disproved the conjecture at the heart of the Burnside problem. A full general disproof of the conjecture was later provided by Novikov and Adjan. (check history)
+
+\subsubsection{Main Result}
+The talk given by Simon represented only a part of a larger body of work working towards answering a larger problem posited by J.A.Brzozowski, following the disproof of Burnside, in an earlier conference. The problem, as Brzozowski stated it reads as follows;
+\begin{quote}
+    Is it decidable whether for a given regular set $\R$,
+    
+    \noindent$\R^*=(\lambda\cup\R)^m$ for some integer $m\geq1$?
+\end{quote}
+The condition on this statement is equivalent to saying that the set is limited and thus can be restated as a theorem by the following;
+\begin{thm}
+It is recursively decidable whether a given rational subset $L\subseteq A^*$ is limited or not.
+\end{thm}
+This is not only true, but there is in fact an algorithm for deciding this that leverages the tropical semiring. 
+
+\begin{defn}
+For the remainder of this section we use $\TM=\N\cup\infty$ to denote the \textbf{tropical integer semiring} and $\TN = \{ 0,1,\infty \}$ to denote the \textbf{discrete tropical semiring}
+
+Notice that $\TN$ is a homomorphic image of $\TM$. To represent this define the morphism $\psi:M_n(\TM)\to M_n(\TN)$ to be the function that maps each finite positive entry in the matrix to $1$ and does nothing otherwise. That is
+\begin{equation}
+    \psi(a)_{ij} = \begin{cases}
+    1&\text{if } 0 < a_{ij} < \infty\\
+    a_{ij}&\text{otherwise}
+    \end{cases}
+\end{equation}
+
+Conversely we also have the set inclusion $\iota:M_n(\TN)\hookrightarrow M_n(\TM)$.
+For convenience we define $\Psi:M_n(\TM)\to M_n(\TM): a\mapsto \iota(\psi(a))$ 
+\end{defn}
+
+Find the condition for a rational subset of a free monoid to be limited. 
+\begin{note}
+Here a rational language is just a regular language i.e. those languages that can be defined by a regular expression using only finite languages, concatenation, union, and the Kleene star operator.
+\end{note}
+Find a recursive algorithm to decide this
+Unable to find a extended algorithm for context free sets
+\subsubsection{Burnside}
+
+In its simplest terms, the aforementioned Burnside problem asks whether every torsion group is locally finite.
+
+For us to understand this statement we must first build up an understanding of the terms within.
+
+\begin{defn}
+Take some abelian group $A$. The \textbf{torsion group} $A_T$ of $A$ is the subgroup of $A$ containing only the elements of finite order
+\end{defn}
+
+\begin{note}
+It is important that the group $A$ chosen above is a abelian group as otherwise we have no grantee that $A_T$ forms a subgroup.
+\end{note}
+
+\begin{ex}
+%$$\vbox{\tabskip0.5em\offinterlineskip
+%    \halign{\strut$#$\hfil\ \tabskip1em\vrule&&$#$\hfil\cr
+%    ~     & e   & a   & b   & b^2 & b^3 & \dots\cr
+%    \noalign{\hrule}\vrule height 12pt width 0pt
+%    e     & e   & a   & b   & b^2 & b^3 &      \cr
+%    a     & a   & e   & ab  & ab^2& ab^3&      \cr
+%    b     & b   & ab  & b^2 & b^3 & b^4 &      \cr
+%    b^2   & b^2 & ab^2& b^3 & b^4 & b^5 &      \cr
+%    b^3   & c^3 & ab^3& b^4 & b^5 & b^6 &      \cr
+%    \vdots& d   &     &     &     &     & \ddots   \cr
+%}}$$
+Let $A = Z(x)$ be the integers extended by some element $x$ where $x+x=0$. We have that $(A,+)$ is an abelian group. The torsion subgroup $A_T = \{0,x\} \cong \Z/2\Z$ as all integers besides $0$ have infinite order under addition.
+\end{ex}
+
+\begin{defn}
+Take a semigroup $S$. We say that $S$ is \textbf{locally finite} if for every finite subset $T\subset S$ the subsemigroup generated by $T$ is also finite.
+\end{defn}
+
+Shown for torsion groups over complex numbers
+Extended to torsion groups of matrices over any field
+
+
+With all this understood we can state a weaker form of the Burnside problem to be solved.
+
+\begin{thm}\label{thm:Simon1}
+Every torsion subsemigroup of $M_n(\hat{\TM})$ is locally finite.
+\end{thm}
+\begin{note}
+Here we are specifically working over the square matrices with entries in tropical integer semiring
+\end{note}
+
+To aid in the proof of this theorem we borrow a result from T.C.Brown \cite{brown1969locally}.
+
+\begin{thm}[Brown]\label{thm:Brown}
+Take any semigroup $S$. If there exists a semigroup morphism from $S$ into some known locally finite semigroup $T$ where the preimage of the idempotents in $T$ are all locally finite then you can say that the whole of $S$ is also locally finite.
+\end{thm}
+
+The proof of this is more complicated and better explained in its introductory text\cite{brown1969locally}.
+
+\begin{defn}
+We define the \textbf{delta function} as the function that takes the value of the largest finite element of a tropical matrix. More specifically we define it as $\delta:M_n(\TM)\to\N$ by
+\begin{equation}
+    \delta(a) = \max(0\cup\{ a_{ij} : 1\leq i,j \leq n, a_{ij}\leq\infty \})
+\end{equation}
+for some $a\in M_n(\TM)$.
+
+This function can be extended over a set of tropical matrices. We denote this $\Delta:\mathcal{P}(M_n(\TM))\to\TM$ where
+\begin{equation}
+    \Delta(X) = \sup(0\cup\{ \delta(a) : a\in X \})
+\end{equation}
+for some $X\subseteq M_n(\TM)$
+\end{defn}
+
+\begin{note}
+$X\subseteq M_n(\TM)$ is finite if and only if we have that $\Delta(X)<\infty$.
+\end{note}
+
+\begin{lem}\label{lem:simon1}
+If we take the convention that for $a,b\in M_n(\TM)$, $a\leq b$ if $a_{ij}\leq b_{ij}$ then for all $a,b,c,d\in M_n(\TM), m\in\N^*$ we have the following;
+\begin{enumerate}
+    \item $a\leq b$ and $c\leq d \implies ac \leq bd$.
+    \item $m(ab) = (ma)(mb)$.
+    \item $a\leq b \implies \delta(a)\leq \delta(b)$.
+    \item $\delta(ma) = m\cdot\delta(a)$.
+    \item $\delta(a)\leq m \implies \Psi(a)\leq a\leq m(\Psi(a))$
+    \item $\delta(ab)\leq\delta(a)+\delta(b)$
+\end{enumerate}
+\end{lem}
+\begin{proof}
+(do later)
+\end{proof}
+
+\begin{defn}
+semigroup generation $X^+$
+\end{defn}
+
+\begin{lem}\label{lem:simon2}
+For all $X\subseteq M_n(\TM)$ we have that,
+\begin{equation}
+    \Delta(\Psi(X)^+)\leq\Delta(X^+)\leq\Delta(X)\cdot\Delta(\Psi(X)^+)
+\end{equation}
+\end{lem}
+\begin{proof}
+
+\end{proof}
+
+\begin{cor}\label{cor:simon1}
+For all finite $X\subseteq M_n(\TM)$, $X^+$ is finite exactly when $\Psi(X)^+$ is finite.
+\end{cor}
+\begin{proof}
+By Lemma \ref{lem:simon2} we immediately have that
+\begin{equation*}
+    \Delta(\Psi(X)^+)\leq\Delta(X^+)
+\end{equation*}
+therefore $\Delta(X^+)$ finite implies $\Delta(\Psi(X)^+$ finite.
+
+To get the opposite implication notice that $X\subseteq M_n(\TM)$ implies that $\Delta(X)<\infty$. Likewise, by assuming $\Delta(\Psi(X)^+$ finite,  Lemma \ref{lem:simon2} tells us that
+\begin{equation*}
+    \Delta(X^+)\leq\Delta(X)\cdot\Delta(\Psi(X)^+)<\infty
+\end{equation*}
+thus implying $\Delta(X^+)$ finite
+\end{proof}
+
+\begin{cor}\label{cor:simon2}
+For all matrix $a\in M_n(\TM)$, $a$ is a torsion exactly when $\Psi(a)$ is a torsion.
+\end{cor}
+\begin{proof}
+This is just an extension of corollary \ref{cor:simon1} using the fact that $a$ is a torsion exactly when $\{a\}^+$ is finite.
+\end{proof}
+
+Now we have all of the pieces required o tackle the main proof in this section
+
+\begin{proof}[Proof of Theorem \ref{thm:Simon1}]
+Let $S$ be a torsion subsemigroup of $M_n(\TM)$, let $T=\psi(S)$, and let $\beta:S\to T$ be the restriction of $\psi$ to $S$. As $T\subseteq M_n(\TN)$ is finite, by Brown's theorem \eqref{thm:Brown} we only need to find that the preimage of every idempotent in $T$ is locally finite. However Corolloary \ref{cor:simon2} says that as $\beta^{-1}e\subseteq\psi^{-1}e$ for all $e\in T$ idempotent, again we need only prove that all idempotents of $T$ are torsions under $\iota$
+\end{proof}
+
+%\subsubsection{Decision Problem}
+%\subsubsection{Proofs}
+
+\subsection{Sandpile Model}
+One more contemporary application of tropical geometry within automata theory is its use in the study of self-organised critical systems\cite{bak1987self, bak1988self}. In particular the study of the sandpile model, an idealised cellular automaton constructed to display SOC behaviour and has remained the archetypal example of such a system, and its extension to a continuous tropical model\cite{kalinin2018self}.
+
+\subsubsection{Classical}
+Abstractly, a sandpile model is defined on the intersection of the integral square lattice, $\Z^2$, and some large convex figure in the Euclidean plane. At each point some number of grains of sand are placed and we define $\varphi$ to be the evaluation of this at a given point.
+
+Space and state
+
+\ex
+Consider the 3x3 sandpile model on the set $\Omega=\{0,1,2\}^2$. On this set we define $\varphi:\Omega\to\N$ to be the function which evaluates the number of grains at each vertex in $\Omega$.
+
+\defn
+We say that a vertex, $(x,y)\in\Omega$ is \textbf{unstable} whenever $\varphi(x,y) \geq 4$; otherwise we say that it is \textbf{stable}. We say that a state, $\varphi$, is \textbf{unstable} if any vertex is unstable under $\varphi$ that is $\varphi(x,y) \geq 4$ for some $(x,y)\in \omega$
+
+We progress the model by 'toppling' the unstable vertices. We do this by transferring one grain of sand to each of the four cardinally adjacent vertices. If one of these vertices lies outside of our the set $\Omega$ then the grain leaves the system. Note that after a unstable vertex has been toppled there is no grantee that it is now stable.
+
+\begin{defn}
+After the process of toppling has terminated we arrive at the \textbf{final} state $\varphi^\circ$ where $\varphi^\circ(x,y)<4$ for all $(x,y)\in\Omega$. We call the process of toppling to a stable state \textbf{relaxation}. For the relaxation we define $H(x,y)$ to be the number of topplings at the vertex $(x,y)$. This is called the \textbf{toppling function}.
+\end{defn}
+
+It is useful to compute the discrete Laplacian of the toppling function, $H$, as it expresses the net flow of the grains of sand. That is
+\begin{equation}
+    \Delta H(p) := \sum_{q:|p-q|=1}(H(q)-H(p))
+\end{equation}
+Of course, for any $p=(x,y)$ the only points in $\Omega$ that are of unit distance are the cardinally adjacent points $(x+1,y)$, $(x,y+1)$, $(x-1,y)$, $(x,y-1)$ so the above can be rewritten
+\begin{align*}
+    \Delta& H(p) = \sum_{q:|p-q|=1}H(q) - 4H(p)\\
+    &= H(x+1,y) + H(x,y+1) + H(x-1,y) + H(x,y-1) - 4H(x,y)
+\end{align*}
+Once we have this function we can re-express our final state, $\varphi^\circ$, in terms of the initial state, $\varphi$ as follows.
+\begin{equation}
+    \varphi^\circ(x,y) = \varphi(x,y) + \Delta H(x,y)
+\end{equation}
+
+Least action principle
+
+\ex
+Take a finite set of points $P\subseteq\Omega$ and define the state $\varphi=\langle3\rangle+\delta_P$ where there are three grains of sand at every point except exactly those points which lie in $P$ where there are four.
+
+\defn
+A \textbf{perturbation} of a state is any action of the form $\varphi \mapsto \varphi + \delta_{(i,j)}$ for some $(i,j)\in\Omega$.
+
+It is interesting to study the effects of perturbations of stable states. In particular, the simulation of successive random perturbation and relaxation of a stable state.
+
+\defn
+A perturbation and its subsequent relaxation are called an \textbf{avalanche}.
+
+\begin{defn}
+We perform a \textbf{toppling} at a given vertex $p$ given $\varphi(p) \geq 4$. We describe this process by $T_p$ described point-wise by
+\begin{equation}
+    T_p(\varphi)(q) =
+    \begin{cases}
+    \Delta\delta_{p q} + \varphi,& \text{if }\varphi(p) \geq 4\\
+    \varphi,& \text{otherwise}
+    \end{cases}
+\end{equation}
+\end{defn}
+
+\subsubsection{Tropical Connection}
+
+\begin{defn}
+Given a fixed vertex $p$, the \textbf{wave operator} acting on some state $\varphi$ is defined as
+\begin{equation}
+    W_p(\varphi) = (T_p(\varphi+\delta_p)-\delta_p)^\circ
+\end{equation}
+\end{defn}
+
+\begin{lem}\label{waveFinalState}
+Given initial state $\varphi = \langle 3 \rangle + \delta_P$ for some finite set of points $P = \{p_1,\dots,p_n\}$, the final state $\varphi^\circ$ can be achieved by successive applications of $W_P = W_{p_1}\circ\dots\circ W_{p_n}$ a large but finite amount of times.
+\end{lem}
+
+\begin{defn}
+When we need to apply an operation in the above way we say $T^\infty a$ represents the operation $T$ applied to element of its domain $a$ large but finite amount of times so that the result lies in the fixed set of $T$. That is
+\begin{equation}
+    T^\infty a = x \iff T^Na=T^{N+1}a=x\text{ for some }N\in\N
+\end{equation}
+\end{defn}
+
+By this definition we can restate Lemma \ref{waveFinalState} as
+\begin{equation}
+    \varphi^\circ = W_P^\infty\varphi + \delta_P.
+\end{equation}
+
+\begin{defn}[Omega Tropical series]
+We define \textbf{$\boldsymbol{\Omega}$-tropical series} as a piecewise linear function on $\omega$ given by
+\begin{equation}
+    F(x,y) = \min_{(i,j)\in\mathcal{A}}(a_{ij}+ix+jy)
+\end{equation}
+for some $\mathcal{A}$ not necessarily finite and $F|_{\partial\Omega} = 0$. Like with other tropical polynomials, we define the tropical curve to be the set in $\Omega$ where the minimum of the function is attained at least twice i.e. $F$ is not smooth.
+
+\end{defn}
+
+\subsubsection{The Tropical Model}
+
+Now we are able to redefine our sandpile model totally in continuous tropical space.
+
+\newpage
+\printbibliography
+\newpage
+\include{equations}
+\end{document}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
